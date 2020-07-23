@@ -89,17 +89,18 @@ use chem
 	allocate(disp(ntot))
 	do i=1,ntot
 		if(i .le. nb) then
-			disp(i) = compute_length( cart_def(bonds(i,1),:), cart_def(bonds(i,2),:) ) - &
+			disp(i) = compute_length( cart_def(bonds(i,1),:), cart_def(bonds(i,2),:))- &
 				compute_length( cart_eq(bonds(i,1),:), cart_eq(bonds(i,2),:) )
 		elseif( i .le. (nb+na) ) then
 			disp(i) = compute_angle( cart_def(angles(i-nb,1),:), cart_def(angles(i-nb,2),:), & 
 				cart_def(angles(i-nb,3),:) ) - compute_angle( cart_eq(angles(i-nb,1),:), & 
 					cart_eq(angles(i-nb,2),:), cart_eq(angles(i-nb,3),:) )
 		else
-			disp(i) = compute_dihedral( cart_def(dihedrals(i-nb-na,1),:), cart_def(dihedrals(i-nb-na,2),:), & 
-				cart_def(dihedrals(i-nb-na,3),:), cart_def(dihedrals(i-na-nb,4),:) ) - & 
-				compute_dihedral( cart_eq(dihedrals(i-nb-na,1),:), cart_eq(dihedrals(i-nb-na,2),:), &
-				cart_eq(dihedrals(i-nb-na,3),:), cart_eq(dihedrals(i-nb-na,4),:) )
+			disp(i) = ABS( compute_dihedral( cart_def(dihedrals(i-nb-na,1),:), &
+				cart_def(dihedrals(i-nb-na,2),:), cart_def(dihedrals(i-nb-na,3),:), &
+				cart_def(dihedrals(i-na-nb,4),:) )) - ABS( compute_dihedral( &
+				cart_eq(dihedrals(i-nb-na,1),:), cart_eq(dihedrals(i-nb-na,2),:), &
+				cart_eq(dihedrals(i-nb-na,3),:), cart_eq(dihedrals(i-nb-na,4),:) ))
 		endif
 	enddo
 	disp = ABS(disp)
@@ -116,6 +117,8 @@ use chem
 		strain_total = strain_total + strain(i)
 	enddo
 	
+	strain = ABS(strain)
+	strain_total = ABS(strain_total)
 !-------------------------------------o-----------------------------------!
 !                        *** PRINTING RESULTS ***                        !
 !-------------------------------------o-----------------------------------!
@@ -127,23 +130,23 @@ use chem
 				write(100, '("B" 2x i0)') nb
 			endif
 			
-			write(100,'(4x i0 1x i0 1x)', advance="no") bonds(i,1), bonds(i,2)
-			write(100, '(3x 2f15.7 " %")') strain(i), 100*strain(i)/strain_total
+			write(100,'(i3 i3 f15.7 f15.7 a2)') bonds(i,1), bonds(i,2), strain(i), &
+						100*strain(i)/strain_total, ' %'
 		elseif(i .le. (nb+na)) then
 			if(i .eq. nb+1) then
 				write(100, '("A" 2x i0)') na
 			endif
 			
-			write(100,'(4x i0 1x i0 1x i0)', advance="no") angles(i-nb,1), angles(i-nb,2), angles(i-nb,3)
-			write(100, '(2x 2f15.7 " %")') strain(i), 100*strain(i)/strain_total
+			write(100,'(i3 i3 i3 f15.7 f15.7 a2)') angles(i-nb,1), angles(i-nb,2), &
+				angles(i-nb,3), strain(i), 100*strain(i)/strain_total, ' %'
 		else
 			if(i .eq. nb+na+1) then
 				write(100, '("D" 2x i0)') nd
 			endif
 			
-			write(100,'(4x i0 1x i0 1x i0 1x i0)', advance="no") dihedrals(i-nb-na,1), dihedrals(i-nb-na,2), &
-				dihedrals(i-nb-na,3), dihedrals(i-nb-na,4)
-			write(100, '(2f15.7 " %")') strain(i), 100*strain(i)/strain_total
+			write(100,'(i3 i3 i3 i3 f15.7 f15.7 a2)') dihedrals(i-nb-na,1), &
+				dihedrals(i-nb-na,2), dihedrals(i-nb-na,3), dihedrals(i-nb-na,4), &
+				strain(i), 100*strain(i)/strain_total, ' %'
 		endif
 	enddo
 	write(100,*) 
