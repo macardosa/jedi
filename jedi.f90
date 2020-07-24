@@ -158,7 +158,7 @@ contains
 		implicit none
 		real(dp), allocatable :: geom(:,:)
 		character(len=2), allocatable :: atom(:)
-		character(len=20) :: filename
+		character(len=100) :: filename
 		integer :: natoms, i
 		
 		open(999,file=filename)
@@ -175,7 +175,7 @@ contains
 		implicit none
 		integer, allocatable :: bonds(:,:), angles(:,:), dihedrals(:,:)
 		integer :: ncoord(3), i
-		character(len=20) :: filename
+		character(len=100) :: filename
 		character :: typeCurv
 		
 		open(999, file=filename)
