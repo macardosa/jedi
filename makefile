@@ -17,5 +17,5 @@ test:
 
 clean:
 		rm *.o *.mod
-cpbin:
+install:
 		cp $(TARGET) $(BINPATH)
