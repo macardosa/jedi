@@ -8,7 +8,7 @@ use chem
 	integer :: i,j,k
 	real(dp) :: ab,c,d
 		! INPUT
-	character(len=20) :: file_eq, file_def, file_red, file_hes
+	character(len=100) :: file_eq, file_def, file_red, file_hes
 	integer :: natoms, natoms_def
 	character(len=2), allocatable :: atom(:), atom_def(:)
 	real(dp), allocatable :: cart_eq(:,:), cart_def(:,:)
