@@ -13,7 +13,8 @@ all: $(TARGET) clean test
 $(TARGET): $(OBJ)
 		$(FC) -o $@ $^
 test:
-		./$(TARGET) geom_eq.xyz geom_def.xyz redundant.dat hessianINT.dat
+		./$(TARGET) test/1.xyz test/5.xyz test/redundant.dat test/hessianINT.dat
+		mv strain.dat test
 
 clean:
 		rm *.o *.mod
