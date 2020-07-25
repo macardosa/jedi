@@ -33,9 +33,12 @@ use chem
         write(*,*)
         
         write(*,*) '*** Example of redundant internal coords***'
-        write(*,*) 'B p q'
-        write(*,*) 'A p q u'
-        write(*,*) 'D p q u v'
+        write(*,*) 'B p'
+        write(*,*) 'p1 p2'
+        write(*,*) 'A q'
+        write(*,*) 'q1 q2 q3'
+        write(*,*) 'D u'
+        write(*,*) 'u1 u2 u3 u4'
         write(*,*)
         STOP
     endif
