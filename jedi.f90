@@ -130,24 +130,24 @@ use chem
 	do i=1,ntot
 		if(i .le. nb) then
 			if(i .eq. 1) then
-				write(100, '("B" 2x i0)') nb
+				write(100, '("B" 2x,i0)') nb
 			endif
 			
-			write(100,'(i3 i3 f15.7 f15.7 a2)') bonds(i,1), bonds(i,2), strain(i), &
+			write(100,'(i3,i3,f15.7,f15.7,a2)') bonds(i,1), bonds(i,2), strain(i), &
 						100*strain(i)/strain_total, ' %'
 		elseif(i .le. (nb+na)) then
 			if(i .eq. nb+1) then
-				write(100, '("A" 2x i0)') na
+				write(100, '("A" 2x,i0)') na
 			endif
 			
-			write(100,'(i3 i3 i3 f15.7 f15.7 a2)') angles(i-nb,1), angles(i-nb,2), &
+			write(100,'(i3,i3,i3,f15.7,f15.7,a2)') angles(i-nb,1), angles(i-nb,2), &
 				angles(i-nb,3), strain(i), 100*strain(i)/strain_total, ' %'
 		else
 			if(i .eq. nb+na+1) then
-				write(100, '("D" 2x i0)') nd
+				write(100, '("D" 2x,i0)') nd
 			endif
 			
-			write(100,'(i3 i3 i3 i3 f15.7 f15.7 a2)') dihedrals(i-nb-na,1), &
+			write(100,'(i3,i3,i3,i3,f15.7,f15.7,a2)') dihedrals(i-nb-na,1), &
 				dihedrals(i-nb-na,2), dihedrals(i-nb-na,3), dihedrals(i-nb-na,4), &
 				strain(i), 100*strain(i)/strain_total, ' %'
 		endif
